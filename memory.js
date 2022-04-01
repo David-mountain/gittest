@@ -398,7 +398,7 @@ console.log(result(arr1, arr2));
 
 // 实现 add(1)(2)(3)
 // 实现n的阶乘 
-// 合并两个有序数组
+// 合并两个有序数组 while着实可怕？？？
 /*
 函数柯里化没有搞出来
 function add () {
@@ -415,6 +415,53 @@ function curry (fn) {
 const curryAdd = curry(add);
 curryAdd(1)(2)(3);
 */
+
+/* 
+    筛选单个的出来
+
+*/
+// const arr = [1,2,5,3,2,4,5,1,8,3,9];
+// const result = arr.filter((item, index, arr) => {
+//     return !arr.includes(item, index+1);
+// })
+/*
+    const arr = [1,2,5,3,2,4,5,1,8,3,9];
+    错误逻辑代码 发现错误没 你看看 你拿数组的每一个元素然后去和所有的元素对比，肯定每次都可以和自己比较到啊 肯定都是false
+    逻辑漏洞就在于和自己做了比较 应该是除了自己以外的其他元素对比
+    我最大的问题就是 这个锁，没有进行重置，每次赋值之后！！！导致后面的无法进入
+    这里我明白了两个点：一个是我最开始无法搞明白的既要遍历当前所有 又要index+1预防超出数组的长度
+    第二个点就是-每次锁的重置 因为没有重置 没有进入push代码 
+*/
+/*
+const result = [];
+// let flag = true; 第一次在这里 错误的逻辑 除非后面重置
+for (let i = 0; i < arr.length; i++) {
+    const item = arr[i];
+    let flag = true; // 每一次都需要重新赋值为true  这里添加可以
+    for (let j = 0; j < arr.length; j++) {
+        const item2 = arr[j];
+        // 加个判断 就是item2 !== item 不能通过元素判断 只能通过下标判断  i !== j
+        if ((item === item2) && (i !== j)) {
+            console.log("进来几次改变锁", arr[i]); 8
+            flag = false; // ！！这里修改了 后面也没有重置 所以永远不会push
+            break;
+        }
+    }
+    console.log(flag);
+    if (flag) {
+        console.log("进入几次push");
+        result.push(item);
+    } 
+    // else {
+    //     flag = true; 这里添加也是可以的
+    // }
+}
+console.log(result);
+*/
+
+
+
+
 
 /*
 客户管理 custManage
